@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useChat = () => {
+export const useChat = (userInfo) => {
   const [messages, setMessages] = useState([
     { 
       id: 1, 
@@ -11,7 +11,7 @@ export const useChat = () => {
     },
     { 
       id: 2, 
-      user: 'You', 
+      user: userInfo?.getDisplayName() || 'You', 
       message: 'Thanks! Let\'s have a great match', 
       timestamp: '2:31 PM', 
       isOwn: true 
@@ -19,7 +19,7 @@ export const useChat = () => {
     { 
       id: 3, 
       user: 'GameMaster', 
-      message: 'Game started! White to move first.', 
+      message: `Welcome ${userInfo?.getDisplayName() || 'Player'}! Game started - White to move first.`, 
       timestamp: '2:32 PM', 
       isSystem: true 
     }
@@ -30,7 +30,7 @@ export const useChat = () => {
     if (newMessage.trim()) {
       const message = {
         id: messages.length + 1,
-        user: 'You',
+        user: userInfo?.getDisplayName() || 'You',
         message: newMessage.trim(),
         timestamp: new Date().toLocaleTimeString([], { 
           hour: '2-digit', 

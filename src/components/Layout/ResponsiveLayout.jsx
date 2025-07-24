@@ -9,12 +9,12 @@ import { useChessGame } from '../../hooks/useChessGame';
 import { useChat } from '../../hooks/useChat';
 import { useResponsive } from '../../hooks/useResponsive';
 
-const ResponsiveLayout = () => {
+const ResponsiveLayout = ({ userInfo }) => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const { isMobile, isTablet, isDesktop } = useResponsive();
   
   const chessGame = useChessGame();
-  const chat = useChat();
+  const chat = useChat(userInfo); // Pass userInfo to chat hook
 
   const toggleChat = () => setIsChatOpen(!isChatOpen);
 
@@ -26,6 +26,7 @@ const ResponsiveLayout = () => {
           gameTime={chessGame.gameTime}
           onToggleChat={toggleChat}
           isChatOpen={isChatOpen}
+          userInfo={userInfo}
         />
         
         {/* Mobile Chat Overlay */}
@@ -34,7 +35,7 @@ const ResponsiveLayout = () => {
         }`}>
           <div className="bg-black/20 backdrop-blur-sm w-full h-full" onClick={toggleChat}>
             <div className="bg-slate-800 w-4/5 h-full ml-auto" onClick={e => e.stopPropagation()}>
-              <ChatComponent {...chat} isMobile={true} onClose={toggleChat} />
+              <ChatComponent {...chat} isMobile={true} onClose={toggleChat} userInfo={userInfo} />
             </div>
           </div>
         </div>
@@ -89,7 +90,7 @@ const ResponsiveLayout = () => {
           <div className={`transform transition-transform duration-300 ${
             isChatOpen ? 'translate-x-0 w-80' : '-translate-x-full w-0'
           }`}>
-            <ChatComponent {...chat} onClose={toggleChat} />
+            <ChatComponent {...chat} onClose={toggleChat} userInfo={userInfo} />
           </div>
 
           {/* Tablet Game Area */}
@@ -130,7 +131,7 @@ const ResponsiveLayout = () => {
     <div className="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex overflow-hidden">
       {/* Desktop Chat Section - 30% */}
       <div className="w-[30%] min-w-[320px] max-w-[400px]">
-        <ChatComponent {...chat} />
+        <ChatComponent {...chat} userInfo={userInfo} />
       </div>
 
       {/* Desktop Game Section - 70% */}
@@ -138,6 +139,7 @@ const ResponsiveLayout = () => {
         <GameHeader 
           currentPlayer={chessGame.currentPlayer}
           gameTime={chessGame.gameTime}
+          userInfo={userInfo}
         />
         
         <div className="flex-1 p-6 flex gap-6">

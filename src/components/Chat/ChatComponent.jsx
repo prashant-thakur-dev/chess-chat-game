@@ -9,7 +9,8 @@ const ChatComponent = ({
   setNewMessage, 
   sendMessage,
   isMobile = false,
-  onClose 
+  onClose,
+  userInfo 
 }) => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -28,7 +29,7 @@ const ChatComponent = ({
               <h2 className="font-bold text-lg">Game Chat</h2>
               <p className="text-sm opacity-90 flex items-center gap-1">
                 <Users className="w-4 h-4" />
-                2 players online
+                Playing as: {userInfo?.getUserBadge()} {userInfo?.getDisplayName()}
               </p>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BotMessageSquare ,Crown, Menu, MessageCircle } from 'lucide-react';
+import { BotMessageSquare, Crown, Menu, MessageCircle } from 'lucide-react';
 import GameTimer from '../Chess/GameTimer';
 import { useResponsive } from '../../hooks/useResponsive';
 
@@ -7,7 +7,8 @@ const GameHeader = ({
   currentPlayer, 
   gameTime, 
   onToggleChat, 
-  isChatOpen 
+  isChatOpen,
+  userInfo 
 }) => {
   const { isMobile, isTablet } = useResponsive();
 
@@ -26,10 +27,16 @@ const GameHeader = ({
     return (
       <div className="bg-slate-800/80 backdrop-blur-sm p-4 border-b border-purple-500/20">
         <div className="flex items-center justify-between mb-3">
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <BotMessageSquare className="w-6 h-6 text-yellow-400" />
-            We Play
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-xl font-bold text-white flex items-center gap-2">
+              <BotMessageSquare className="w-6 h-6 text-yellow-400" />
+              We Play
+            </h1>
+            <div className="text-sm text-gray-300 flex items-center gap-1">
+              <span>{userInfo.getUserBadge()}</span>
+              <span>{userInfo.getDisplayName()}</span>
+            </div>
+          </div>
           <button
             onClick={onToggleChat}
             className={`p-2 rounded-lg transition-colors ${
@@ -51,10 +58,16 @@ const GameHeader = ({
       <div className="bg-slate-800/80 backdrop-blur-sm p-4 border-b border-purple-500/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-              <BotMessageSquare className="w-7 h-7 text-yellow-400" />
-              We play
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                <BotMessageSquare className="w-7 h-7 text-yellow-400" />
+                We Play
+              </h1>
+              <div className="text-sm text-gray-300 flex items-center gap-1">
+                <span>{userInfo.getUserBadge()}</span>
+                <span>{userInfo.getDisplayName()}</span>
+              </div>
+            </div>
             {onToggleChat && (
               <button
                 onClick={onToggleChat}
